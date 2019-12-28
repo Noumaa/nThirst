@@ -1,0 +1,38 @@
+name: nThirst
+version: "1.0"
+author: Nouma
+api-version: "1.14"
+main: me.nouma.nthirst.Main
+
+commands:
+  nthirst:
+    aliases: [thirst]
+    description: Plugin's main command.
+
+permissions:
+  nthirst.*:
+    default: op
+    description: Allows to do anything.
+
+  nthirst.reload:
+    default: op
+    description: Allows to reload the plugin.
+    children: [nthirst.*]
+
+  nthirst.set.*:
+    default: op
+    description: Allows to change everybody's thirst.
+    children: [nthirst.*]
+  nthirst.set.yourself:
+    default: op
+    description: Allows to change your thirst.
+    children: [nthirst.set.*]
+  nthirst.set.others:
+    default: op
+    description: Allows to change other's thirst.
+    children: [nthirst.set.*]
+
+  nthirst.debug:
+    default: true
+    description: Allows to update your hydration gauge.
+    children: [nthirst.*]
