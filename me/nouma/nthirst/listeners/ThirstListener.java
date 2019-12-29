@@ -2,7 +2,6 @@ package me.nouma.nthirst.listeners;
 
 import me.nouma.nthirst.Main;
 import me.nouma.nthirst.Utils;
-import me.nouma.nthirst.api.events.PlayerThirstChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -46,8 +45,7 @@ public class ThirstListener implements Listener {
 
         if (water < 20) main.api.setHydration(e.getPlayer(), newWater);
 
-        // Clear effects TODO call updateEffects' method
-        e.getPlayer().getActivePotionEffects().forEach(potionEffect -> e.getPlayer().removePotionEffect(potionEffect.getType()));
+        main.api.sendEffects(e.getPlayer());
     }
 
     // Make damages doesn't affect absorptions when gauge is here

@@ -25,7 +25,7 @@ public class ThirstCommand implements CommandExecutor {
                     return true;
                 }
                 main.reload();
-                sender.sendMessage(prefix + "§aPlugin successfully reloaded!");
+                sender.sendMessage(prefix + "Plugin successfully reloaded!");
                 return true;
             } else if (args[0].equalsIgnoreCase("debug")) {
                 if (!(sender instanceof Player)) {
@@ -37,7 +37,7 @@ public class ThirstCommand implements CommandExecutor {
                     return true;
                 }
                 main.api.sendGauge((Player) sender);
-                sender.sendMessage(prefix + "§aHydration gauge successfully updated!");
+                sender.sendMessage(prefix + "Hydration gauge successfully updated!");
                 return true;
             } else if (args[0].equalsIgnoreCase("set")) {
                 if (args.length == 2) {
@@ -57,7 +57,7 @@ public class ThirstCommand implements CommandExecutor {
                         return true;
                     }
                     main.api.setHydration((Player) sender, i);
-                    sender.sendMessage(prefix + "§aSuccessfully changed your hydration level to §e" + Utils.clamp(i, 0, 20) + "§a!");
+                    sender.sendMessage(prefix + "Successfully changed your hydration level to §e" + Utils.clamp(i, 0, 20) + "§r!");
                     return true;
                 } else if (args.length == 3) {
                     if (!sender.hasPermission("nthirst.set.others")) {
@@ -77,7 +77,7 @@ public class ThirstCommand implements CommandExecutor {
                         return true;
                     }
                     main.api.setHydration(target, i);
-                    sender.sendMessage(prefix + "§aSuccessfully changed §e" + target.getName() + "§a's hydration level to §e" + Utils.clamp(i, 0, 20) + "§a!");
+                    sender.sendMessage(prefix + "Successfully changed §e" + target.getName() + "§r's hydration level to §e" + Utils.clamp(i, 0, 20) + "§r!");
                     return true;
                 } else {
                     sender.sendMessage("§8Correct usage: §7/nthirst set §c<number> §8or §7/nthirst set §c<player> <number>");

@@ -2,12 +2,9 @@ package me.nouma.nthirst.schedulers;
 
 import me.nouma.nthirst.Main;
 import me.nouma.nthirst.Utils;
-import me.nouma.nthirst.api.events.PlayerThirstChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class DehydrationScheduler {
 
@@ -34,11 +31,7 @@ public class DehydrationScheduler {
 
             if (water > 0) main.api.setHydration(player, newWater);
 
-            // Apply effects TODO extract this to a sendEffects' method
-            int duration = main.getConfig().getInt("dehydration.rate")*20;
-            for (int i = 20; newWater < i; --i) {
-                if (main.getConfig().contains("effects." + i)) main.getConfig().getStringList("effects." + i).forEach(effect -> player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(effect.split(":")[0]), duration, Integer.parseInt(effect.split(":")[1]), false, false, false)));
-            }
+            main.api.sendEffects(player);
 
             // Send alert sound
             Sound sound;

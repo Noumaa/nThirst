@@ -6,11 +6,11 @@ import me.nouma.nthirst.listeners.ThirstListener;
 import me.nouma.nthirst.schedulers.DehydrationScheduler;
 import me.nouma.nthirst.schedulers.GaugeScheduler;
 import org.bukkit.Bukkit;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,10 +23,13 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     public UserdataFile userdata;
 
+    public List<PotionEffectType> effects = new ArrayList<>();
+
     public GaugeScheduler gaugeScheduler;
     public DehydrationScheduler dehydrationScheduler;
 
     public HashMap<String, Integer> playerHydration = new HashMap<>();
+    public HashMap<String, BossBar> playerBossbar = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -36,6 +39,8 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
         setupDefaultConfig();
         userdata = new UserdataFile();
+
+        EffectsLoader.load();
 
         // Dehydration
         dehydrationScheduler = new DehydrationScheduler(getConfig().getInt("dehydration.rate"));
@@ -71,9 +76,14 @@ public class Main extends JavaPlugin implements CommandExecutor {
         // TODO remove absorption when switching
         getConfig().addDefault("gauge.place", "absorption");
         getConfig().addDefault("gauge.refresh_rate", 20);
+
         getConfig().addDefault("gauge.actionbar.character", "#");
         getConfig().addDefault("gauge.actionbar.color_full", "&b");
         getConfig().addDefault("gauge.actionbar.color_empty", "&7");
+
+        getConfig().addDefault("gauge.bossbar.title", "§bHydration");
+        getConfig().addDefault("gauge.bossbar.color", "BLUE");
+        getConfig().addDefault("gauge.bossbar.style", "SEGMENTED_20");
 
         getConfig().addDefault("play_sound.enable", true);
         getConfig().addDefault("play_sound.points", 6);
@@ -91,6 +101,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 
     public void reload() {
         reloadConfig();
+        EffectsLoader.load();
         gaugeScheduler.setUpdateTime(getConfig().getInt("gauge.refresh_rate"));
         dehydrationScheduler.setUpdateTime(getConfig().getInt("dehydration.rate"));
     }
